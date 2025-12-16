@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur d'Empreinte Carbone - Hello DBMS+</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- En-tête -->
+    <header>
+        <div class="container">
+            <h1> Calculateur d'Empreinte Carbone</h1>
+            <p class="subtitle">Découvrez votre impact environnemental personnel</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="#calculator" class="active">Calculateur</a></li>
+                <li><a href="#statistics">Statistiques</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="container">
+        <!-- Section calculateur -->
+        <section id="calculator" class="section">
+            <h2> Votre Empreinte Carbone</h2>
+            
+            <!-- Sélection du pays -->
+            <div class="country-selector">
+                <label for="country">Sélectionnez votre pays:</label>
+                <select id="country" onchange="updateCountry()">
+                    <option value="FR" selected>🇫🇷 France</option>
+                    {% for country in countries %}
+                    <option value="{{ country.code }}">
+                        {{ country.code }} - {{ country.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <div id="country-info" class="info-box">
+                    <p>Intensité carbone: <strong id="intensity">0.055</strong> kg CO₂/kWh</p>
+                </div>
+            </div>
+
+            <!-- Formulaire d'entrée -->
+            <form id="calculatorForm">
+                <!-- Transport -->
+                <fieldset class="form-section">
+                    <legend> Transport (par mois)</legend>
+                    <div class="form-group">
+                        <label for="car_km">
+                            Voiture <small>(km)</small>
+                        </label>
+                        <input type="number" id="car_km" name="car_km" min="0" value="800" step="100">
+                        <span class="help">Ex: 800 km = ~200 km/semaine</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="bus_km">
+                            Bus/Métro <small>(km)</small>
+                        </label>
+                        <input type="number" id="bus_km" name="bus_km" min="0" value="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="train_km">
+                            Train <small>(km)</small>
+                        </label>
+                        <input type="number" id="train_km" name="train_km" min="0" value="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight_km">
+                            Avion <small>(km)</small>
+                        </label>
+                        <input type="number" id="flight_km" name="flight_km" min="0" value="0" step="1000">
+                        <span class="help">Ex: Paris-NY = 5800 km</span>
+                    </div>
+                </fieldset>
+
+                <!-- Habitat -->
+                <fieldset class="form-section">
+                    <legend> Habitat (par mois)</legend>
+                    <div class="form-group">
+                        <label for="heating_kwh">
+                            Chauffage <small>(kWh)</small>
+                        </label>
+                        <input type="number" id="heating_kwh" name="heating_kwh" min="0" value="400" step="50">
+                        <span class="help">Hiver: ~400 kWh, Été: ~50 kWh</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="electricity_kwh">
+                            Électricité <small>(kWh)</small>
+                        </label>
+                        <input type="number" id="electricity_kwh" name="electricity_kwh" min="0" value="150" step="50">
+                        <span class="help">Moyenne française: ~150 kWh/mois</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="water_m3">
+                            Eau <small>(m³)</small>
+                        </label>
+                        <input type="number" id="water_m3" name="water_m3" min="0" value="10" step="1">
+                        <span class="help">Moyenne: ~10 m³/mois</span>
+                    </div>
+                </fieldset>
+
+                <!-- Alimentation -->
+                <fieldset class="form-section">
+                    <legend> Alimentation (par mois)</legend>
+                    <div class="form-group">
+                        <label for="meat_kg">
+                            Viande <small>(kg)</small>
+                        </label>
+                        <input type="number" id="meat_kg" name="meat_kg" min="0" value="4" step="0.5">
+                        <span class="help">~1 kg/semaine</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="dairy_kg">
+                            Produits laitiers <small>(kg)</small>
+                        </label>
+                        <input type="number" id="dairy_kg" name="dairy_kg" min="0" value="8" step="1">
+                        <span class="help">Fromage, yaourt, lait</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="vegetables_kg">
+                            Fruits & Légumes <small>(kg)</small>
+                        </label>
+                        <input type="number" id="vegetables_kg" name="vegetables_kg" min="0" value="15" step="1">
+                        <span class="help">Plus il y en a, mieux c'est!</span>
+                    </div>
+                </fieldset>
+
+                <button type="button" class="btn-primary" onclick="calculateFootprint()">
+                    Calculer mon empreinte carbone
+                </button>
+            </form>
+
+            <!-- Résultats -->
+            <div id="results" class="results" style="display: none;">
+                <h3> Vos Résultats</h3>
+                
+                <div class="results-grid">
+                    <!-- Total annuel -->
+                    <div class="result-card big">
+                        <div class="value" id="annual-total">0</div>
+                        <div class="label">tonnes CO₂/an</div>
+                        <div class="comparison" id="comparison">+0%</div>
+                    </div>
+
+                    <!-- Détails par catégorie -->
+                    <div class="result-card">
+                        <div class="value" id="transport-total">0</div>
+                        <div class="label">Transport</div>
+                        <div class="percentage" id="transport-percent">0%</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="value" id="habitat-total">0</div>
+                        <div class="label">Habitat</div>
+                        <div class="percentage" id="habitat-percent">0%</div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="value" id="food-total">0</div>
+                        <div class="label">Alimentation</div>
+                        <div class="percentage" id="food-percent">0%</div>
+                    </div>
+                </div>
+
+                <!-- Équivalences -->
+                <div class="equivalents">
+                    <h4>Équivalences annuelles:</h4>
+                    <div class="equiv-list">
+                        <div class="equiv">
+                             <strong id="trees-needed">0</strong> arbres à planter
+                        </div>
+                        <div class="equiv">
+                             <strong id="flights-equiv">0</strong> vols Paris-New York
+                        </div>
+                        <div class="equiv">
+                             <strong id="cars-equiv">0</strong> km en voiture essence
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommandations -->
+                <div id="recommendations" class="recommendations">
+                    <!-- Chargé via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section statistiques -->
+        <section id="statistics" class="section">
+            <h2> Statistiques Mondiales</h2>
+            
+            <div class="stats-info">
+                <div class="stat-card">
+                    <h4>Intensité carbone moyenne</h4>
+                    <p class="stat-value">{{ global_avg | round(3) }}</p>
+                    <p class="stat-unit">kg CO₂/kWh</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Pays le plus propre</h4>
+                    <p class="stat-value">{{ min_intensity | round(3) }}</p>
+                    <p class="stat-unit">kg CO₂/kWh</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Pays le plus polluant</h4>
+                    <p class="stat-value">{{ max_intensity | round(3) }}</p>
+                    <p class="stat-unit">kg CO₂/kWh</p>
+                </div>
+            </div>
+
+            <div id="stats-loading" class="loading">
+                Chargement des statistiques...
+            </div>
+            <div id="stats-content" style="display: none;">
+                <!-- Chargé via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Calculateur d'Empreinte Carbone - Hello DBMS+</p>
+            <p class="credits">
+                Données: ADEME, IEA, Global Carbon Atlas
+            </p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

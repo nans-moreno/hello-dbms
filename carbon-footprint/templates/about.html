@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Calculateur d'Empreinte Carbone</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- En-tête -->
+    <header>
+        <div class="container">
+            <h1> À propos</h1>
+            <p class="subtitle">Comprendre l'application et son contexte</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="/">Calculateur</a></li>
+                <li><a href="/#statistics">Statistiques</a></li>
+                <li><a href="/about" class="active">À propos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="container">
+        <section class="section">
+            <h2> À propos de ce projet</h2>
+            
+            <h3>🎯 Objectif</h3>
+            <p>
+                Le Calculateur d'Empreinte Carbone est une application éducative créée dans le 
+                cadre du projet <strong>Hello DBMS+</strong>, un projet universitaire destiné à 
+                comprendre les données, les bases de données et SQL.
+            </p>
+            <p>
+                L'objectif est de :
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>📊 Sensibiliser à l'impact environnemental personnel</li>
+                <li>🌍 Comparer les émissions mondiales par pays</li>
+                <li>💡 Proposer des actions concrètes de réduction</li>
+                <li>🗄️ Démontrer l'utilisation pratique de SQL et des bases de données</li>
+            </ul>
+
+            <h3>🛠️ Technologie</h3>
+            <div style="background: #ecf0f1; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                <p><strong>Backend :</strong> Python Flask</p>
+                <p><strong>Base de données :</strong> SQLite 3</p>
+                <p><strong>Frontend :</strong> HTML5, CSS3, JavaScript</p>
+                <p><strong>API :</strong> RESTful JSON</p>
+            </div>
+
+            <h3>📊 Données utilisées</h3>
+            <p>
+                Les données d'émissions de CO₂ proviennent de sources reconnues :
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>🇫🇷 <strong>ADEME</strong> (Agence de la Transition Écologique) - Données françaises</li>
+                <li>🌍 <strong>IEA</strong> (International Energy Agency) - Données internationales</li>
+                <li>🌐 <strong>Global Carbon Atlas</strong> - Statistiques mondiales</li>
+                <li>📈 <strong>IPCC</strong> (Intergovernmental Panel on Climate Change)</li>
+            </ul>
+
+            <h3>🔬 Méthodologie</h3>
+            <p>
+                Le calcul de l'empreinte carbone utilise les facteurs d'émission standard :
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li><strong>Transport :</strong> kg CO₂ par km selon le mode (voiture, bus, train, avion)</li>
+                <li><strong>Habitat :</strong> kg CO₂ par kWh consommé (variable selon le pays)</li>
+                <li><strong>Alimentation :</strong> kg CO₂ par kg de produit (viande, produits laitiers, etc.)</li>
+            </ul>
+
+            <h3> Cas d'usage SQL</h3>
+            <p>
+                Cette application illustre de nombreux concepts SQL importants :
+            </p>
+            <div style="background: #ecf0f1; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                <p><strong>Requêtes SQL utilisées :</strong></p>
+                <ul style="margin-left: 1rem;">
+                    <li>SELECT - Récupérer les données de pays</li>
+                    <li>WHERE - Filtrer par code pays</li>
+                    <li>JOIN - Associer facteurs d'émission et activités</li>
+                    <li>GROUP BY - Statistiques par région</li>
+                    <li>ORDER BY - Trier par intensité carbone</li>
+                    <li>AGGREGATE (SUM, AVG, MIN, MAX)</li>
+                    <li>VIEW - Créer des vues statistiques</li>
+                </ul>
+            </div>
+
+            <h3>🌱 Impact réel</h3>
+            <p>
+                Les émissions moyennes mondiales sont d'environ <strong>4.8 tonnes CO₂ par personne par an</strong>.
+            </p>
+            <p style="margin-bottom: 1rem;">
+                L'objectif de l'Accord de Paris est de limiter le réchauffement à 1.5°C, ce qui 
+                nécessite de réduire les émissions à environ <strong>2.3 tonnes par personne d'ici 2050</strong>.
+            </p>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+                <tr style="background: #ecf0f1;">
+                    <th style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: left;">Région</th>
+                    <th style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: right;">Moyenne</th>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7;">Monde 🌍</td>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: right;"><strong>4.8 t/an</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7;">France 🇫🇷</td>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: right;"><strong>4.7 t/an</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7;">Union Européenne 🇪🇺</td>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: right;"><strong>6.0 t/an</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7;">États-Unis 🇺🇸</td>
+                    <td style="padding: 0.75rem; border: 1px solid #bdc3c7; text-align: right;"><strong>15.5 t/an</strong></td>
+                </tr>
+            </table>
+
+            <h3>💡 Comment réduire votre empreinte ?</h3>
+            <div style="background: var(--light); padding: 1.5rem; border-radius: 8px;">
+                <h4 style="margin-bottom: 1rem;">🚗 Transport</h4>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Covoiturage ou transports en commun</li>
+                    <li>Passer à un véhicule électrique</li>
+                    <li>Réduire les vols aériens</li>
+                    <li>Préférer le train à l'avion</li>
+                </ul>
+
+                <h4 style="margin-bottom: 1rem;">🏠 Habitat</h4>
+                <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                    <li>Améliorer l'isolation thermique</li>
+                    <li>Installer des panneaux solaires</li>
+                    <li>Utiliser des ampoules LED</li>
+                    <li>Réduire la température de chauffage</li>
+                </ul>
+
+                <h4 style="margin-bottom: 1rem;">🍽️ Alimentation</h4>
+                <ul style="margin-left: 2rem;">
+                    <li>Réduire la consommation de viande rouge</li>
+                    <li>Augmenter fruits et légumes</li>
+                    <li>Acheter local et de saison</li>
+                    <li>Réduire le gaspillage alimentaire</li>
+                </ul>
+            </div>
+
+            <h3>📚 Ressources complémentaires</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li><strong>ADEME :</strong> <a href="https://www.ademe.fr/">www.ademe.fr</a></li>
+                <li><strong>Our World in Data :</strong> <a href="https://ourworldindata.org/emissions">Émissions CO₂</a></li>
+                <li><strong>Carbon Footprint Ltd :</strong> <a href="https://www.carbonfootprint.com/">www.carbonfootprint.com</a></li>
+                <li><strong>Global Carbon Project :</strong> <a href="http://www.globalcarbonproject.org/">globalcarbonproject.org</a></li>
+            </ul>
+
+            <h3>👨‍💻 Projet Hello DBMS+</h3>
+            <p>
+                Ce projet fait partie de <strong>Hello DBMS+</strong>, un programme pédagogique complet couvrant :
+            </p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>📖 Veille théorique sur les bases de données</li>
+                <li>🛠️ 9 jobs SQL progressifs (débutant → avancé)</li>
+                <li>💼 Application réelle avec Flask et SQLite</li>
+                <li>🚀 Intégration complet d'une pile web moderne</li>
+            </ul>
+
+            <h3>⚖️ Limitation et Avertissement</h3>
+            <p style="background: #fff3cd; padding: 1rem; border-radius: 5px; border-left: 4px solid #f39c12;">
+                ⚠️ <strong>Cet outil fourni des estimations approximatives.</strong><br>
+                <br>
+                L'empreinte carbone réelle dépend de nombreux facteurs non couverts ici (source d'énergie 
+                exacte, distance moyenne, type de véhicule, etc.). Les chiffres fournis sont des estimations 
+                éducatives basées sur des moyennes nationales.
+            </p>
+
+            <h3>📞 Contact & Retours</h3>
+            <p>
+                Ce projet a été créé dans un cadre pédagogique. Pour des remarques ou améliorations :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>📧 Questions sur SQL</li>
+                <li>🐛 Bugs ou erreurs</li>
+                <li>💡 Suggestions d'amélioration</li>
+            </ul>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2>❓ Questions Fréquentes</h2>
+            
+            <h4>Q: Comment calcule-t-on l'équivalent en arbres ?</h4>
+            <p>
+                R: Un arbre absorbe environ 20 kg de CO₂ par an. Ainsi, si vous produisez 5000 kg 
+                de CO₂ par an, vous auriez besoin de ~250 arbres pour compenser.
+            </p>
+
+            <h4>Q: Pourquoi la France a une empreinte carbone si basse ?</h4>
+            <p>
+                R: La France dispose d'un mix énergétique très "vert" grâce à :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>~70% de nucléaire (très bas carbone)</li>
+                <li>~15% d'énergies renouvelables</li>
+                <li>Seulement ~10% de fossiles</li>
+            </ul>
+
+            <h4>Q: Les données incluent-elles les émissions indirectes ?</h4>
+            <p>
+                R: Partiellement. Les données couvrent :
+            </p>
+            <ul style="margin-left: 2rem;">
+                <li>✅ Directes (voiture, chauffage)</li>
+                <li>✅ Indirectes simples (électricité)</li>
+                <li>❌ Complexes (fabrication, shipping, etc.)</li>
+            </ul>
+
+            <h4>Q: Comment puis-je réduire mon empreinte de 50% ?</h4>
+            <p>
+                R: Les actions les plus impactantes :
+            </p>
+            <ol style="margin-left: 2rem;">
+                <li>Réduire les vols aériens (impact très important)</li>
+                <li>Passer à un véhicule électrique ou carburant (1/3 moins)</li>
+                <li>Réduire viande rouge (30-50% pour food)</li>
+                <li>Améliorer isolation habitat (20-40%)</li>
+            </ol>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Calculateur d'Empreinte Carbone - Hello DBMS+</p>
+            <p class="credits">
+                Données: ADEME, IEA, Global Carbon Atlas
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
